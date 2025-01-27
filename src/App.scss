@@ -1,2 +1,35 @@
 @use "./scss/main" as *;
 
+.app{
+    background-color: $beige-100;
+    min-height: 100vh;
+    min-width: fit-content;
+    display: flex; 
+    flex-direction:column-reverse; 
+    justify-content: space-between;
+    position:relative;
+    .navbar-container{
+        position:sticky;
+        bottom:0;
+        z-index:99;
+    }
+    .pages{
+        padding: 1.5rem 1rem 0 1rem; 
+    }
+}
+
+@media (min-width:$tablet-size){
+    .app{
+        .pages{
+            padding: 2rem 2.5rem 0 2.5rem;
+        }
+    }
+}
+@media (min-width:$desktop-size){
+    .app{
+        flex-direction:row;
+        .pages{
+            flex-grow:1;
+        }
+    }
+}
