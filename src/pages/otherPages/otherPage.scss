@@ -1,0 +1,11 @@
+@use "../../scss/main.scss" as *;
+
+.other-page-title{
+    color:$grey-900; 
+    @include text-preset-1; 
+}
+.other-page-message{
+    color:$grey-900; 
+    @include text-preset-2; 
+    margin-top: 2rem;
+}
