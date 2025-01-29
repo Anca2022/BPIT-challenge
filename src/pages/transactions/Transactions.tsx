@@ -11,7 +11,6 @@ export default function Transactions(){
         fetch("src/data/transactions.json")
         .then(data => data.json())
         .then(data =>{
-            console.log(data);
             setTransactions(data);
         })
        }, [])
