@@ -32,6 +32,10 @@
         background-color: $white;
         border-radius: 0.5rem;
         padding: 1.5rem 1.25rem; 
+        .no-data{
+            @include text-preset-3; 
+            padding: 2rem 0;
+        }
     }
 }
 

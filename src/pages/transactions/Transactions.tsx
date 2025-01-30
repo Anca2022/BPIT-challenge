@@ -6,15 +6,76 @@ import Transaction from '../../types/Transaction';
 import './transactions.scss';
 
 export default function Transactions(){
-    const [transactions, setTransactions]=useState< Transaction[] | null>(null); 
+    const [data, setData] = useState<Transaction[] | null>(null);
+    const [transactions, setTransactions]=useState<Transaction[] | null>(null);
+    const [categories, setCategories] = useState <string[] | null>(null);
+    const [category, setCategory] = useState("All Transactions");
+    const [sortWord, setSortWord] = useState('Latest'); 
+    const [total, setTotal] = useState<number>(0); 
+    
     useEffect(()=>{
-        console.log("effect ran");
         fetch("src/data/transactions.json")
-        .then(data => data.json())
-        .then(data =>{
-            setTransactions(data);
+        .then(response => response.json())
+        .then((response : Transaction[] | null ) =>{
+            const allCategories = new Set(response?.map((item : Transaction) => item.category)); 
+            const allCategoriesString = [...allCategories]; 
+            setData(response);
+            setTransactions(response);
+            setCategories(allCategoriesString);
         })
+        .catch(error=> console.log(error))
        }, [])
+    
+    useEffect(()=>{
+        calcTotal();
+        function calcTotal(){
+            let sum = 0; 
+            if (transactions){
+                sum = transactions.reduce(function (total, item){return total + item.amount}, 0)
+            }
+            setTotal(sum); 
+        }
+    }, [transactions])
+    
+    function search(e:React.ChangeEvent<HTMLInputElement>){
+        if(data){
+            const searchTransactions = data.filter(item => item.description.toLowerCase().includes(e.target.value.toLowerCase()))
+            setTransactions(searchTransactions); 
+        }
+    }
+    function filter(e:React.MouseEvent<HTMLUListElement, MouseEvent>){
+        const target = e.target as HTMLElement;
+        setCategory(target.innerText); 
+        if(data){
+            if(target.innerText === "All Transactions"){
+                setTransactions(data); 
+            } else {
+                const filteredTransactions = data.filter(item => item.category.includes(target.innerText))
+            setTransactions(filteredTransactions); 
+            }   
+        }
+    }
+    function sort(e:React.MouseEvent<HTMLUListElement, MouseEvent>){
+        const target = e.target as HTMLElement;
+        setSortWord(target.innerText); 
+        if(data){
+            const transactionsToBeSorted = [...data];
+            if(target.innerText === "Highest"){
+                transactionsToBeSorted?.sort((a, b) => b.amount - a.amount)
+            } else if (target.innerText === "Lowest"){
+                transactionsToBeSorted?.sort((a, b) => a.amount - b.amount)
+            } else if(target.innerText === "Latest" || target.innerText === "Oldest"){
+                transactionsToBeSorted.sort((a,b)=>{
+                    const date1 = new Date(a.date); 
+                    const date2 = new Date(b.date);
+                    if(target.innerText === "Latest") {
+                        return date2.getTime() - date1.getTime(); 
+                    } else return date1.getTime() - date2.getTime(); 
+                })
+            }
+            setTransactions(transactionsToBeSorted);
+        }
+    }
     return (
         <section className='transactions-page'>
             <div className="transactions-page-header">
@@ -22,12 +83,13 @@ export default function Transactions(){
                 <button className='add-button'>+ Add</button>
             </div>
             <div className="content-container">
-                <SearchAndFilter/>
-                {transactions? 
+                <SearchAndFilter search={search} filter={filter} sort={sort} 
+                categories={categories} category={category} sortWord={sortWord}/>
+                {transactions && transactions.length>0 ? 
                     <TransactionsList transactions={transactions}/>
-                    : <>No transactions available</>
+                    : <p className='no-data'>No transactions available</p>
                 }
-                <TransactionsTotal/>
+                <TransactionsTotal category={category} total={total}/>
             </div>
         </section>
     )

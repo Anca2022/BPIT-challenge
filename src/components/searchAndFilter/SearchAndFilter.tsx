@@ -5,7 +5,15 @@ import FilterIcon from '../../assets/icon-filter-mobile.svg?react';
 import CarretDown from '../../assets/icon-caret-down.svg?react';
 import './searchAndFilter.scss';
 
-export default function SearchAndFilter(){
+interface Props{
+    categories:string[] | null;
+    category:string;
+    sortWord:string;
+    search: (e:React.ChangeEvent<HTMLInputElement>)=>void;
+    filter: (e:React.MouseEvent<HTMLUListElement, MouseEvent>)=>void;
+    sort: (e:React.MouseEvent<HTMLUListElement, MouseEvent>)=>void;
+}
+export default function SearchAndFilter({search, filter, sort, categories, category, sortWord}: Props){
     const sortDropdownRef=useRef<HTMLDivElement>(null); 
     const filterDropdownRef=useRef<HTMLDivElement>(null);
     function toggleDropdown(ref : React.RefObject<HTMLDivElement>){
@@ -14,11 +22,10 @@ export default function SearchAndFilter(){
     function closeDropdown(ref : React.RefObject<HTMLDivElement>){
         ref.current?.classList.remove("display-dropdown"); 
     }
-
     return(
         <div className='search-and-filter-transactions'>
             <div className='search input-field'>
-                <input type="text" placeholder='Search transaction'/>
+                <input type="text" placeholder='Search transaction' onChange={(e)=>search(e)}/>
                 <SearchIcon/>
             </div>
             
@@ -34,12 +41,12 @@ export default function SearchAndFilter(){
                     <div className='sort-desktop'>
                         <span>Sort By</span>
                         <div className="input-field">
-                            <span>Latest</span>
+                            <span>{sortWord}</span>
                             <CarretDown/>
                         </div>
                     </div>
                     <div className="select-dropdown" ref={sortDropdownRef}>
-                        <ul>
+                        <ul onClick={(e)=> sort(e)}>
                             <li className='selected-option'>Latest</li>
                             <li>Oldest</li>
                             <li>Highest</li>
@@ -58,19 +65,20 @@ export default function SearchAndFilter(){
                     <div className='filter-desktop'>
                         <span>Category</span>  
                         <div className="input-field">
-                            <span>All Transactions</span>
+                            <span>{category}</span>
                             <CarretDown/>
                         </div>
                     </div>
                     <div className="select-dropdown" ref={filterDropdownRef}>
-                        <ul>
+                        <ul onClick={(e)=>filter(e)}>
                             <li className='selected-option'>All Transactions</li>
-                            <li>Sports</li>
-                            <li>Groceries</li>
-                            <li>Lifestyle</li>
-                            <li>Sports</li>
-                            <li>Groceries</li>
-                            <li>Lifestyle</li>
+                            {categories? 
+                            categories.map(item => {
+                                return <li key={item}>{item}</li>
+                                })
+                            :
+                            null
+                            }
                         </ul>
                     </div>
                 </div>
