@@ -4,6 +4,7 @@ import TransactionsList from '../../components/transactionsList/TransactionsList
 import TransactionsTotal from '../../components/transactionsTotal/TransactionsTotal';
 import Transaction from '../../types/Transaction';
 import './transactions.scss';
+
 export default function Transactions(){
     const [transactions, setTransactions]=useState< Transaction[] | null>(null); 
     useEffect(()=>{
@@ -26,7 +27,6 @@ export default function Transactions(){
                     <TransactionsList transactions={transactions}/>
                     : <>No transactions available</>
                 }
-                    
                 <TransactionsTotal/>
             </div>
         </section>

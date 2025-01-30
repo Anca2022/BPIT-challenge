@@ -7,7 +7,7 @@
     }
     .transactions-list{
         list-style: none;
-        li{
+        li{ 
             padding:1rem 0;
             border-bottom: 1.5px solid $grey-100;
             &:first-of-type{
@@ -45,6 +45,7 @@
         }
         .col4{
             flex-basis:14%;
+            flex-grow:1;
             text-align: right;
         }
     }
@@ -52,6 +53,9 @@
 
 @media (min-width:$desktop-size){
     .transactions-container{
+        .col1{
+            flex-grow:1;
+        }
         .col2{
             flex-basis:12%;
         }
@@ -59,6 +63,7 @@
             flex-basis:12%;
         }
         .col4{
+            flex-grow:unset;
             flex-basis:20%;
         }
     }

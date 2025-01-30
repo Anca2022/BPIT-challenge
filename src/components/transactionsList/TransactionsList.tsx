@@ -1,4 +1,4 @@
-import TransactionsListItem from "./TransactionsListItem";
+import TransactionsListItem from "./transactionsListItem/TransactionsListItem";
 import Transaction from "../../types/Transaction";
 import './transactionList.scss';
 
@@ -14,9 +14,7 @@ export default function TransactionsList({transactions} : {transactions: Transac
             <ul className='transactions-list'>
                 {
                 transactions.map((transaction:Transaction): JSX.Element =>{
-                    return <li key={transaction.id}>
-                        <TransactionsListItem transaction={transaction}/>
-                    </li>
+                    return <TransactionsListItem key={transaction.id} transaction={transaction}/>
                 })
                 }
             </ul>
