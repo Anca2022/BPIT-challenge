@@ -1,0 +1,70 @@
+@use '../../scss/main.scss' as *;
+
+.transactions-container{
+    margin:1.5rem auto;
+    .transaction-list-header{
+        display: none;
+    }
+    .transactions-list{
+        list-style: none;
+        li{ 
+            padding:1rem 0;
+            border-bottom: 1.5px solid $grey-100;
+            &:first-of-type{
+                padding-top:0;
+            }
+            &:last-of-type{
+                padding-bottom:0;
+                border-bottom:none;
+            }
+        }
+    }
+}
+
+@media(min-width:$tablet-size){
+    .transactions-container{
+        .transaction-list-header{
+            display: flex;
+            flex-direction:row;
+            gap:2rem;
+            align-items: center;
+            margin-bottom:1.5rem;
+            padding:12px 0;
+            border-bottom: 1.5px solid $grey-100;
+            color:$grey-500;
+            @include text-preset-5;
+        }
+        .col1{
+            flex-basis:44%;
+        }
+        .col2{
+            flex-basis:13%;
+        }
+        .col3{
+            flex-basis:14%;
+        }
+        .col4{
+            flex-basis:14%;
+            flex-grow:1;
+            text-align: right;
+        }
+    }
+}
+
+@media (min-width:$desktop-size){
+    .transactions-container{
+        .col1{
+            flex-grow:1;
+        }
+        .col2{
+            flex-basis:12%;
+        }
+        .col3{
+            flex-basis:12%;
+        }
+        .col4{
+            flex-grow:unset;
+            flex-basis:20%;
+        }
+    }
+}

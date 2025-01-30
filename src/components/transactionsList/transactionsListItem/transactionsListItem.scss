@@ -1,0 +1,97 @@
+@use '../../../scss/main.scss' as *;
+
+.transactions-list-item{
+    display:grid; 
+    grid-template-columns: 12% 50% 1fr;
+    color:$grey-900;
+    .tr-col0{
+        grid-column: 1 / span 1;
+        grid-row: 1 / span 2;
+        order:1;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+        img{
+            width:2rem;
+            height:2rem;
+            border-radius: 50%;
+        }
+    }
+    .tr-col1{
+        order:2;
+        margin-bottom:4px;
+        @include text-preset-4-bold;
+    }
+    .tr-col2{
+        order:4;
+        color: $grey-500;
+        @include text-preset-5; 
+    }
+    .tr-col3{
+        order:5;
+        text-align: right;
+        color: $grey-500;
+        @include text-preset-5;
+    }
+    .tr-col4{
+        order:3;
+        margin-bottom:4px;
+        text-align: right;
+        @include text-preset-4-bold;
+    }
+}
+@media(min-width:$tablet-size){
+    .transactions-list-item{
+        display:flex;
+        flex-direction:row;
+        align-items: center;
+        gap:2rem;
+        .tr-col0{
+            order:1;
+            flex-basis: 3.5rem;
+            margin-right:-2rem;
+            img{
+                width:2.5rem;
+                height:2.5rem;
+            }
+        }
+        .tr-col1{
+            order:2;
+            flex-basis: calc(44% - 3.5rem ); 
+        }
+        .tr-col2{
+            order:3;
+            flex-basis: 13%;
+        }
+        .tr-col3{
+            order:4;
+            text-align:left;
+            flex-basis:14%;
+        }
+        .tr-col4{
+            order:5;
+            flex-basis:14;
+            text-align:right;
+            flex-grow:1;
+        }
+    }
+}
+    
+@media(min-width:$desktop-size){
+    .transactions-list-item{
+        .tr-col1{
+            flex-grow:1;
+        }
+        .tr-col2{
+            flex-basis:12%;
+        }
+        .tr-col3{
+            flex-basis:12%; 
+        }
+        .tr-col4{
+            flex-grow:unset;
+            flex-basis:20%;
+        }
+    }
+}

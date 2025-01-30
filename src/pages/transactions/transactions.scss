@@ -1,0 +1,48 @@
+@use '../../scss/main.scss' as *;
+
+.transactions-page{
+    color:$grey-900; 
+    .transactions-page-header{
+        display: flex;
+        flex-direction:row;
+        justify-content: space-between;
+        align-items: center;
+        .title{
+            @include text-preset-1; 
+        }
+        .add-button{
+            border:none;
+            outline:none;
+            background-color: $grey-900;
+            color:$white;
+            @include text-preset-4-bold;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            transition: 0.6s ease-out; 
+            &:hover{
+                background-color: $grey-500;
+                transition: 0.6s ease-out; 
+                cursor: pointer;
+            }
+        }
+    }
+    
+    .content-container{
+        margin-top: 2rem;
+        background-color: $white;
+        border-radius: 0.5rem;
+        padding: 1.5rem 1.25rem; 
+        .no-data{
+            @include text-preset-3; 
+            padding: 2rem 0;
+        }
+    }
+}
+
+@media (min-width:$tablet-size){
+    .transactions-page{
+        .content-container{
+            padding: 2rem;
+        }
+    }
+}
