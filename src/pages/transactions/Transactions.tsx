@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import SearchAndFilter from '../../components/searchAndFilter/SearchAndFilter';
 import TransactionsList from '../../components/transactionsList/TransactionsList';
 import TransactionsTotal from '../../components/transactionsTotal/TransactionsTotal';
+import Modal from '../../components/modal/Modal';
+import CtaBtn from '../../components/ctaBtn/CtaBtn';
 import Transaction from '../../types/Transaction';
 import './transactions.scss';
 
@@ -12,7 +14,8 @@ export default function Transactions(){
     const [category, setCategory] = useState("All Transactions");
     const [sortWord, setSortWord] = useState('Latest'); 
     const [total, setTotal] = useState<number>(0); 
-    
+    const [modal, setModal] = useState(false);
+
     useEffect(()=>{
         fetch("src/data/transactions.json")
         .then(response => response.json())
@@ -76,11 +79,30 @@ export default function Transactions(){
             setTransactions(transactionsToBeSorted);
         }
     }
+    function openModal(){
+        setModal(true); 
+    }
+    function addTransaction(t:Transaction){
+        let newData :Transaction[] | null= null; 
+        if (data){
+            newData=[...data]; 
+            newData.unshift(t);
+        } else {newData=[t]}
+        setData(newData);
+        setTransactions(newData)
+    }
+
     return (
         <section className='transactions-page'>
             <div className="transactions-page-header">
                 <h1 className="title">Transactions</h1>
-                <button className='add-button'>+ Add</button>
+                <CtaBtn handleClick={openModal}>+ Add</CtaBtn>
+                {modal && 
+                    <Modal setModal={setModal} 
+                    categories={categories} 
+                    id={data? (data.length + 1).toString(): "1"}
+                    addTransaction={addTransaction}></Modal>
+                }
             </div>
             <div className="content-container">
                 <SearchAndFilter search={search} filter={filter} sort={sort} 

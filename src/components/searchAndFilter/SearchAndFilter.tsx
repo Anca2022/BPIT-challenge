@@ -2,8 +2,9 @@ import { useRef } from 'react';
 import SearchIcon from '../../assets/icon-search.svg?react'; 
 import SortIcon from '../../assets/icon-sort-mobile.svg?react'; 
 import FilterIcon from '../../assets/icon-filter-mobile.svg?react';
-import CarretDown from '../../assets/icon-caret-down.svg?react';
+import CaretDown from '../../assets/icon-caret-down.svg?react';
 import './searchAndFilter.scss';
+import '../inputField.scss';
 
 interface Props{
     categories:string[] | null;
@@ -42,7 +43,7 @@ export default function SearchAndFilter({search, filter, sort, categories, categ
                         <span>Sort By</span>
                         <div className="input-field">
                             <span>{sortWord}</span>
-                            <CarretDown/>
+                            <CaretDown/>
                         </div>
                     </div>
                     <div className="select-dropdown" ref={sortDropdownRef}>
@@ -66,18 +67,16 @@ export default function SearchAndFilter({search, filter, sort, categories, categ
                         <span>Category</span>  
                         <div className="input-field">
                             <span>{category}</span>
-                            <CarretDown/>
+                            <CaretDown/>
                         </div>
                     </div>
                     <div className="select-dropdown" ref={filterDropdownRef}>
                         <ul onClick={(e)=>filter(e)}>
                             <li className='selected-option'>All Transactions</li>
-                            {categories? 
+                            {categories &&
                             categories.map(item => {
                                 return <li key={item}>{item}</li>
                                 })
-                            :
-                            null
                             }
                         </ul>
                     </div>
