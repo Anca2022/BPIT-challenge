@@ -1,7 +1,8 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import CtaBtn from "../ctaBtn/CtaBtn";
 import CaretDown from "../../assets/icon-caret-down.svg?react";
 import Transaction from "../../types/Transaction";
+import dateOptions from "../../data/dateOptions";
 import "./modal.scss"; 
 import "../inputField.scss";
 
@@ -17,20 +18,31 @@ export default function Modal({setModal, addTransaction, categories, id}:Props){
     const [description, setDescription] = useState('');
     const [amount, setAmount] = useState<string>(''); 
     const [date, setDate] = useState<string>(); 
+    const [today, setToday] = useState<string>('');
+
+    useEffect(()=>{
+        const dateToday = new Date(Date.now());
+        const dateForInput = dateToday.toISOString().split("T")[0]; 
+        const dateForTransaction = dateToday.toLocaleDateString("en-GB", dateOptions);
+        setToday(dateForInput);
+        setDate(dateForTransaction);
+    }, [])
 
     function toggleDropdown(){
         categoryRef.current?.classList.toggle("display-dropdown"); 
     }
-    function handleSelect(e:React.MouseEvent<HTMLUListElement, MouseEvent>){
+    function handleSelect(e:React.MouseEvent<HTMLUListElement, MouseEvent> 
+        | React.KeyboardEvent<HTMLLIElement>){
         const target = e.target as HTMLElement; 
         setCategory(target.innerText);
         toggleDropdown();
     }
     function handleDate(inputDate:string){
         const date = new Date(inputDate);
-        const options:Intl.DateTimeFormatOptions = { day: "2-digit", month: "short", year: "numeric" };
-        const formatted = date.toLocaleDateString("en-GB", options);
-        setDate(formatted);
+        const dateForInput = date.toISOString().split("T")[0]; 
+        const dateForTransaction = date.toLocaleDateString("en-GB", dateOptions);
+        setDate(dateForTransaction);
+        setToday(dateForInput);
     }
     function submitForm(e:React.FormEvent<HTMLFormElement>){
         e.preventDefault();
@@ -42,8 +54,7 @@ export default function Modal({setModal, addTransaction, categories, id}:Props){
             amount: Number(amount!),
             category: category,
             image: `assets/${image}.jpg`
-            }
-        console.log(transaction);
+        }
         addTransaction(transaction);
         setModal(false);
     }
@@ -52,7 +63,11 @@ export default function Modal({setModal, addTransaction, categories, id}:Props){
             <div className="modal-container">
                 <div className="modal-header">
                     <h2>Add New Transaction</h2>
-                    <button className="close-modal-btn" onClick={()=>setModal(false)}>✖</button>
+                    <button className="close-modal-btn" 
+                    onClick={()=>setModal(false)}
+                    >
+                        ✖
+                    </button>
                 </div>
                 <p className="modal-text">Choose a category and set the amount for your transaction.</p>
                 <form onSubmit={submitForm}>
@@ -61,6 +76,7 @@ export default function Modal({setModal, addTransaction, categories, id}:Props){
                         <div className="input-field"
                         tabIndex={0}
                         onClick={toggleDropdown}
+                        onKeyUp={(e)=>{ if(e.key==="Enter") toggleDropdown()}}
                         >
                             <span>{category}</span>
                             <CaretDown/>
@@ -71,7 +87,11 @@ export default function Modal({setModal, addTransaction, categories, id}:Props){
                             >
                                 {categories &&
                                 categories.map(item => {
-                                    return <li key={item}>{item}</li>
+                                    return <li tabIndex={0} key={item}
+                                    onKeyUp={(e)=>{ if(e.key==="Enter") handleSelect(e)}}
+                                    >
+                                        {item}
+                                    </li>
                                     })
                                 }
                             </ul>
@@ -104,6 +124,7 @@ export default function Modal({setModal, addTransaction, categories, id}:Props){
                     <div className="input-field">
                         <input id="date" 
                         type="date" 
+                        value={today}
                         required
                         onChange={(e)=>handleDate(e.target.value)}
                         />
