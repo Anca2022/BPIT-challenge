@@ -3,5 +3,4 @@ const dateOptions:Intl.DateTimeFormatOptions = {
     month: "short", 
     year: "numeric" 
 };
-
 export default dateOptions;

@@ -10,9 +10,15 @@ export default function TransactionsListItem({transaction}:{transaction:Transact
             <p className="tr-col1">
                 {transaction.description}
             </p> 
-            <p className="tr-col2">{transaction.category}</p>
-            <p className="tr-col3">{transaction.date}</p>
-            <p className="tr-col4">{`$${transaction.amount}`}</p>
+            <p className="tr-col2">
+                {transaction.category}
+            </p>
+            <p className="tr-col3">
+                {transaction.date}
+            </p>
+            <p className="tr-col4">
+                {`$${transaction.amount}`}
+            </p>
         </li>
     );
 }

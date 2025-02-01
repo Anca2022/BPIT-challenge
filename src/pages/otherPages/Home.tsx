@@ -1,5 +1,9 @@
 import OtherPage from "./OtherPage";
 
 export default function Home(){
-    return  <section><OtherPage>Home</OtherPage></section>; 
+    return (
+    <section>
+        <OtherPage>Home</OtherPage>
+    </section>
+    ); 
 }
