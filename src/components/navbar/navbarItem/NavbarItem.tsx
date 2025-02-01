@@ -14,7 +14,9 @@ export default function NavbarItem({icon:Icon, label, route}: MenuOption){
             >
                 <Icon/>
             </span>
-            <span className='navbar-item-label'>{label}</span>
+            <span className='navbar-item-label'>
+                {label}
+            </span>
         </NavLink>
-    )
+    );
 }

@@ -1,0 +1,202 @@
+[
+    {
+    "id": "1",
+    "date": "27 Jan 2025",
+    "description": "Lidl groceries",
+    "amount": 49.5,
+    "category": "Groceries",
+    "image": "assets/groceries.jpg"
+    }, 
+    {
+    "id": "2",
+    "date": "27 Jan 2025",
+    "description": "TV + phone subscription",
+    "amount": 29.99,
+    "category": "Bills",
+    "image": "assets/bills.jpg"
+    }, 
+    {
+    "id": "3",
+    "date": "25 Jan 2025",
+    "description": "Cushion for Loki",
+    "amount": 25.75,
+    "category": "General",
+    "image": "assets/general.jpg"
+    }, 
+    {
+    "id": "4",
+    "date": "24 Jan 2025",
+    "description": "Gym membership",
+    "amount": 50,
+    "category": "Sports",
+    "image": "assets/sports.jpg"
+    }, 
+    {
+    "id": "5",
+    "date": "24 Jan 2025",
+    "description": "Dog treats",
+    "amount": 13.5,
+    "category": "Lifestyle",
+    "image": "assets/lifestyle.jpg"
+    }, 
+    {
+    "id": "6",
+    "date": "20 Jan 2025",
+    "description": "Utilities bills",
+    "amount": 58.21,
+    "category": "Bills",
+    "image": "assets/bills.jpg"
+    }, 
+    {
+    "id": "7",
+    "date": "19 Jan 2025",
+    "description": "Movie night",
+    "amount": 12,
+    "category": "Entertainment",
+    "image": "assets/entertainment.jpg"
+    }, 
+    {
+    "id": "8",
+    "date": "19 Jan 2025",
+    "description": "Uber - going out",
+    "amount": 4.75,
+    "category": "Transportation",
+    "image": "assets/transportation.jpg"
+    }, 
+    {
+    "id": "9",
+    "date": "16 Jan 2025",
+    "description": "Ingredients for pasta",
+    "amount": 8.1,
+    "category": "Groceries",
+    "image": "assets/groceries.jpg"
+    }, 
+    {
+    "id": "10",
+    "date": "13 Jan 2025",
+    "description": "Personal couch",
+    "amount": 50,
+    "category": "Lifestyle",
+    "image": "assets/lifestyle.jpg"
+    }, 
+    {
+    "id": "11",
+    "date": "13 Jan 2025",
+    "description": "Lidl groceries",
+    "amount": 63.55,
+    "category": "Groceries",
+    "image": "assets/groceries.jpg"
+    }, 
+    {
+    "id": "12",
+    "date": "12 Jan 2025",
+    "description": "Sport equipment",
+    "amount": 98.24,
+    "category": "Sports",
+    "image": "assets/sports.jpg"
+    }, 
+    {
+    "id": "13",
+    "date": "12 Jan 2025",
+    "description": "Movie night 3D",
+    "amount": 14.5,
+    "category": "Entertainment",
+    "image": "assets/entertainment.jpg"
+    }, 
+    {
+    "id": "14",
+    "date": "10 Jan 2025",
+    "description": "House cleaning products",
+    "amount": 57.4,
+    "category": "Groceries",
+    "image": "assets/groceries.jpg"
+    }, 
+    {
+    "id": "15",
+    "date": "9 Jan 2025",
+    "description": "Dining out",
+    "amount": 48,
+    "category": "General",
+    "image": "assets/general.jpg"
+    }, 
+    {
+    "id": "16",
+    "date": "9 Jan 2025",
+    "description": "Standup ticket",
+    "amount": 20.5,
+    "category": "Entertainment",
+    "image": "assets/entertainment.jpg"
+    }, 
+    {
+    "id": "17",
+    "date": "9 Jan 2025",
+    "description": "Ingredients for quiche",
+    "amount": 17.2,
+    "category": "Groceries",
+    "image": "assets/groceries.jpg"
+    }, 
+    {
+    "id": "18",
+    "date": "8 Jan 2025",
+    "description": "Taxi back home",
+    "amount": 5.4,
+    "category": "Transportation",
+    "image": "assets/transportation.jpg"
+    }, 
+    {
+    "id": "19",
+    "date": "8 Jan 2025",
+    "description": "Day at the spa",
+    "amount": 25,
+    "category": "Personal Care",
+    "image": "assets/personal-care.jpg"
+    }, 
+    {
+    "id": "20",
+    "date": "6 Jan 2025",
+    "description": "Theatre play",
+    "amount": 15.8,
+    "category": "Entertainment",
+    "image": "assets/entertainment.jpg"
+    }, 
+    {
+    "id": "21",
+    "date": "5 Jan 2025",
+    "description": "General groceries",
+    "amount": 136.2,
+    "category": "Groceries",
+    "image": "assets/groceries.jpg"
+    }, 
+    {
+    "id": "22",
+    "date": "5 Jan 2025",
+    "description": "Books acquisition",
+    "amount": 28.76,
+    "category": "General",
+    "image": "assets/general.jpg"
+    }, 
+    {
+    "id": "23",
+    "date": "4 Jan 2025",
+    "description": "Facial treatment",
+    "amount": 30,
+    "category": "Personal Care",
+    "image": "assets/personal-care.jpg"
+    }, 
+    {
+    "id": "24",
+    "date": "4 Jan 2025",
+    "description": "Personal hygiene",
+    "amount": 38.74,
+    "category": "Groceries",
+    "image": "assets/groceries.jpg"
+    }, 
+    {
+    "id": "25",
+    "date": "2 Jan 2025",
+    "description": "Transportation card",
+    "amount": 40.5,
+    "category": "Transportation",
+    "image": "assets/transportation.jpg"
+    }
+]

@@ -17,7 +17,7 @@ export default function Transactions(){
     const [modal, setModal] = useState(false);
 
     useEffect(()=>{
-        fetch("src/data/transactions.json")
+        fetch("/data/transactions.json")
         .then(response => response.json())
         .then((response : Transaction[] | null ) =>{
             const allCategories = new Set(response?.map((item : Transaction) => item.category)); 
@@ -42,7 +42,9 @@ export default function Transactions(){
     
     function search(e:React.ChangeEvent<HTMLInputElement>){
         if(data){
-            const searchTransactions = data.filter(item => item.description.toLowerCase().includes(e.target.value.toLowerCase()))
+            const searchTransactions = data.filter(item => {
+                return item.description.toLowerCase().includes(e.target.value.toLowerCase())
+            })
             setTransactions(searchTransactions); 
         }
     }
@@ -54,7 +56,7 @@ export default function Transactions(){
                 setTransactions(data); 
             } else {
                 const filteredTransactions = data.filter(item => item.category.includes(target.innerText))
-            setTransactions(filteredTransactions); 
+                setTransactions(filteredTransactions); 
             }   
         }
     }
@@ -63,18 +65,22 @@ export default function Transactions(){
         setSortWord(target.innerText); 
         if(data){
             const transactionsToBeSorted = [...data];
-            if(target.innerText === "Highest"){
-                transactionsToBeSorted?.sort((a, b) => b.amount - a.amount)
-            } else if (target.innerText === "Lowest"){
-                transactionsToBeSorted?.sort((a, b) => a.amount - b.amount)
-            } else if(target.innerText === "Latest" || target.innerText === "Oldest"){
-                transactionsToBeSorted.sort((a,b)=>{
-                    const date1 = new Date(a.date); 
-                    const date2 = new Date(b.date);
-                    if(target.innerText === "Latest") {
-                        return date2.getTime() - date1.getTime(); 
-                    } else return date1.getTime() - date2.getTime(); 
-                })
+            switch(target.innerText){
+                case "Highest": 
+                    transactionsToBeSorted?.sort((a, b) => b.amount - a.amount); 
+                    break; 
+                case "Lowest":
+                    transactionsToBeSorted?.sort((a, b) => a.amount - b.amount);
+                    break;
+                case "Latest":
+                case "Oldest":
+                    transactionsToBeSorted.sort((a,b)=>{
+                        const date1 = new Date(a.date); 
+                        const date2 = new Date(b.date);
+                        if(target.innerText === "Latest") {
+                            return date2.getTime() - date1.getTime(); 
+                        } else return date1.getTime() - date2.getTime();
+                    });
             }
             setTransactions(transactionsToBeSorted);
         }
@@ -89,7 +95,7 @@ export default function Transactions(){
             newData.unshift(t);
         } else {newData=[t]}
         setData(newData);
-        setTransactions(newData)
+        setTransactions(newData);
     }
 
     return (
@@ -98,15 +104,18 @@ export default function Transactions(){
                 <h1 className="title">Transactions</h1>
                 <CtaBtn handleClick={openModal}>+ Add</CtaBtn>
                 {modal && 
-                    <Modal setModal={setModal} 
+                    <Modal 
+                    setModal={setModal} 
                     categories={categories} 
+                    addTransaction={addTransaction}
                     id={data? (data.length + 1).toString(): "1"}
-                    addTransaction={addTransaction}></Modal>
+                    />
                 }
             </div>
             <div className="content-container">
                 <SearchAndFilter search={search} filter={filter} sort={sort} 
-                categories={categories} category={category} sortWord={sortWord}/>
+                categories={categories} category={category} sortWord={sortWord}
+                />
                 {transactions && transactions.length>0 ? 
                     <TransactionsList transactions={transactions}/>
                     : <p className='no-data'>No transactions available</p>

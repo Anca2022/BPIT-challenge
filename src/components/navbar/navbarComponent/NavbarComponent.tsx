@@ -6,19 +6,18 @@ import "./navbarComponent.scss";
 export default function NavbarComponent({navbarOptions} : {navbarOptions:MenuOption[]}){
     return(
         <aside className="navbar-container">
-            <header className="navbar-header"><Logo/></header>
+            <header className="navbar-header">
+                <Logo/>
+            </header>
             <nav>
                 <ul className="navbar-items">
-                    {
-                    navbarOptions.map((item : MenuOption) : JSX.Element => {
+                    {navbarOptions.map((item : MenuOption) : JSX.Element => {
                         return(
                             <li key={item.label}>
-                                {/* <NavbarItem icon={item.icon} label={item.label} route={item.route}></NavbarItem> */}
-                                <NavbarItem {...item}></NavbarItem>
+                                <NavbarItem {...item}/>
                             </li>
                         )
-                    })
-                    }
+                    })}
                 </ul>
             </nav>
         </aside>
