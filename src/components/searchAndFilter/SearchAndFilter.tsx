@@ -26,7 +26,10 @@ export default function SearchAndFilter({search, filter, sort, categories, categ
     return(
         <div className='search-and-filter-transactions'>
             <div className='search input-field'>
-                <input type="text" placeholder='Search transaction' onChange={(e)=>search(e)}/>
+                <input type="text" 
+                placeholder='Search transaction' 
+                onChange={(e)=>search(e)}
+                />
                 <SearchIcon/>
             </div>
             
@@ -46,9 +49,11 @@ export default function SearchAndFilter({search, filter, sort, categories, categ
                             <CaretDown/>
                         </div>
                     </div>
-                    <div className="select-dropdown" ref={sortDropdownRef}>
+                    <div className="select-dropdown" 
+                    ref={sortDropdownRef}
+                    >
                         <ul onClick={(e)=> sort(e)}>
-                            <li className='selected-option'>Latest</li>
+                            <li>Latest</li>
                             <li>Oldest</li>
                             <li>Highest</li>
                             <li>Lowest</li>
@@ -70,9 +75,11 @@ export default function SearchAndFilter({search, filter, sort, categories, categ
                             <CaretDown/>
                         </div>
                     </div>
-                    <div className="select-dropdown" ref={filterDropdownRef}>
+                    <div className="select-dropdown" 
+                    ref={filterDropdownRef}
+                    >
                         <ul onClick={(e)=>filter(e)}>
-                            <li className='selected-option'>All Transactions</li>
+                            <li>All Transactions</li>
                             {categories &&
                             categories.map(item => {
                                 return <li key={item}>{item}</li>
