@@ -14,7 +14,6 @@ export default function Transactions(){
     const [category, setCategory] = useState("All Transactions");
     const [sortWord, setSortWord] = useState('Latest'); 
     const [searchWord, setSearchWord] = useState(''); 
-    const [total, setTotal] = useState<number>(0); 
     const [modal, setModal] = useState(false);
 
     useEffect(()=>{
@@ -30,16 +29,8 @@ export default function Transactions(){
         .catch(error=> console.log(error))
        }, [])
     
-    useEffect(()=>{
-        calcTotal();
-        function calcTotal(){
-            let sum = 0; 
-            if (transactions){
-                sum = transactions.reduce(function (total, item){return total + item.amount}, 0)
-            }
-            setTotal(sum); 
-        }
-    }, [transactions])
+    let total = 0; 
+    if (transactions) total = transactions.reduce(function (total, item){return total + item.amount}, 0);
     
     function search(e : React.ChangeEvent<HTMLInputElement>){
         setSearchWord(e.target.value);
@@ -94,6 +85,9 @@ export default function Transactions(){
         } else {newData=[t]}
         setData(newData);
         setTransactions(newData);
+        setCategory("All Transactions"); 
+        setSortWord("Latest");
+        setSearchWord('');
     }
 
     return (
@@ -112,7 +106,7 @@ export default function Transactions(){
             </div>
             <div className="content-container">
                 <SearchAndFilter search={search} filter={filter} sort={sort} 
-                categories={categories} category={category} sortWord={sortWord}
+                categories={categories} category={category} sortWord={sortWord} searchWord={searchWord}
                 />
                 {transactions && transactions.length>0 ? 
                     <TransactionsList transactions={transactions}/>

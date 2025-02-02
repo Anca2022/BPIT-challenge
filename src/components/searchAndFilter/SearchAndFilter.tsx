@@ -10,11 +10,12 @@ interface Props{
     categories:string[] | null;
     category:string;
     sortWord:string;
+    searchWord:string;
     search: (e:React.ChangeEvent<HTMLInputElement>)=>void;
     filter: (e:React.MouseEvent<HTMLUListElement, MouseEvent>)=>void;
     sort: (e:React.MouseEvent<HTMLUListElement, MouseEvent>)=>void;
 }
-export default function SearchAndFilter({search, filter, sort, categories, category, sortWord}: Props){
+export default function SearchAndFilter({search, filter, sort, categories, category, sortWord, searchWord}: Props){
     const sortDropdownRef=useRef<HTMLDivElement>(null); 
     const filterDropdownRef=useRef<HTMLDivElement>(null);
     function toggleDropdown(ref : React.RefObject<HTMLDivElement>){
@@ -28,6 +29,7 @@ export default function SearchAndFilter({search, filter, sort, categories, categ
             <div className='search input-field'>
                 <input type="text" 
                 placeholder='Search transaction' 
+                value={searchWord}
                 onChange={(e)=>search(e)}
                 />
                 <SearchIcon/>
