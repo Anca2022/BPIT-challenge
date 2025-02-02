@@ -13,6 +13,7 @@ export default function Transactions(){
     const [categories, setCategories] = useState <string[] | null>(null);
     const [category, setCategory] = useState("All Transactions");
     const [sortWord, setSortWord] = useState('Latest'); 
+    const [searchWord, setSearchWord] = useState(''); 
     const [total, setTotal] = useState<number>(0); 
     const [modal, setModal] = useState(false);
 
@@ -40,49 +41,46 @@ export default function Transactions(){
         }
     }, [transactions])
     
-    function search(e:React.ChangeEvent<HTMLInputElement>){
-        if(data){
-            const searchTransactions = data.filter(item => {
-                return item.description.toLowerCase().includes(e.target.value.toLowerCase())
-            })
-            setTransactions(searchTransactions); 
-        }
+    function search(e : React.ChangeEvent<HTMLInputElement>){
+        setSearchWord(e.target.value);
+        searchSortFilter(category, e.target.value, sortWord);
     }
     function filter(e:React.MouseEvent<HTMLUListElement, MouseEvent>){
         const target = e.target as HTMLElement;
         setCategory(target.innerText); 
-        if(data){
-            if(target.innerText === "All Transactions"){
-                setTransactions(data); 
-            } else {
-                const filteredTransactions = data.filter(item => item.category.includes(target.innerText))
-                setTransactions(filteredTransactions); 
-            }   
-        }
+        searchSortFilter(target.innerText, searchWord, sortWord);
     }
     function sort(e:React.MouseEvent<HTMLUListElement, MouseEvent>){
         const target = e.target as HTMLElement;
         setSortWord(target.innerText); 
+        searchSortFilter(category, searchWord, target.innerText);
+    }
+    function searchSortFilter(cat:string, search:string, sort:string){
         if(data){
-            const transactionsToBeSorted = [...data];
-            switch(target.innerText){
+            let preOrderedData: Transaction[]=[];  
+            if(cat === "All Transactions") preOrderedData = [...data]; 
+                else preOrderedData = data.filter(item => item.category.includes(cat));
+            switch(sort){
                 case "Highest": 
-                    transactionsToBeSorted?.sort((a, b) => b.amount - a.amount); 
+                    preOrderedData.sort((a, b) => b.amount - a.amount); 
                     break; 
                 case "Lowest":
-                    transactionsToBeSorted?.sort((a, b) => a.amount - b.amount);
+                    preOrderedData.sort((a, b) => a.amount - b.amount);
                     break;
                 case "Latest":
                 case "Oldest":
-                    transactionsToBeSorted.sort((a,b)=>{
+                    preOrderedData.sort((a,b)=>{
                         const date1 = new Date(a.date); 
                         const date2 = new Date(b.date);
-                        if(target.innerText === "Latest") {
+                        if(sort === "Latest") {
                             return date2.getTime() - date1.getTime(); 
                         } else return date1.getTime() - date2.getTime();
                     });
             }
-            setTransactions(transactionsToBeSorted);
+            const searchTransactions = preOrderedData.filter(item => {
+                return item.description.toLowerCase().includes(search.toLowerCase())
+            })
+            setTransactions(searchTransactions); 
         }
     }
     function openModal(){
