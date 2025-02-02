@@ -6,7 +6,6 @@ import Modal from '../../components/modal/Modal';
 import CtaBtn from '../../components/ctaBtn/CtaBtn';
 import Transaction from '../../types/Transaction';
 import './transactions.scss';
-import { createSearchParams } from 'react-router-dom';
 
 export default function Transactions(){
     const [data, setData] = useState<Transaction[] | null>(null);
