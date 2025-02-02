@@ -1,6 +1,7 @@
 @use '../../scss/main.scss' as *;
 
 .transactions-page{
+    animation: fadeIn 0.3s ease-in-out;     
     color:$grey-900; 
     .transactions-page-header{
         display: flex;

@@ -1,5 +1,6 @@
 @use "../../scss/main.scss" as *;
 .container{
+    animation: fadeIn 0.3s ease-in-out; 
     position:absolute;          
     inset:0;
     width:100vw;

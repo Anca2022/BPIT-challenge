@@ -1,5 +1,6 @@
 @use "../../scss/main.scss" as *;
 .other-pages{
+    animation: fadeIn 0.3s ease-in-out;
     .other-page-title{
         color:$grey-900; 
         @include text-preset-1; 
