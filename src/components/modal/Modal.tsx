@@ -1,60 +1,37 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useReducer } from "react";
+import { formReducer, createInitialForm, ACTION } from "../../hooks/formReducer";
 import CtaBtn from "../ctaBtn/CtaBtn";
 import CaretDown from "../../assets/icon-caret-down.svg?react";
-import Transaction from "../../types/Transaction";
-import dateOptions from "../../data/dateOptions";
+import ModalProps from "../../types/ModalProps";
 import "./modal.scss"; 
 import "../inputField.scss";
 
-interface Props{
-    setModal: (value: React.SetStateAction<boolean>) => void;
-    addTransaction: (t:Transaction)=>void;
-    categories: string[] | null;
-    id:string
-}
-export default function Modal({setModal, addTransaction, categories, id}:Props){
+export default function Modal({setModal, addTransaction, categories, id}:ModalProps){
     const categoryRef = useRef<HTMLDivElement | null>(null)
-    const [category, setCategory] = useState<string>('Groceries');
-    const [description, setDescription] = useState('');
-    const [amount, setAmount] = useState<string>(''); 
-    const [date, setDate] = useState<string>(); 
-    const [today, setToday] = useState<string>('');
-
-    useEffect(()=>{
-        const dateToday = new Date(Date.now());
-        const dateForInput = dateToday.toISOString().split("T")[0]; 
-        const dateForTransaction = dateToday.toLocaleDateString("en-GB", dateOptions);
-        setToday(dateForInput);
-        setDate(dateForTransaction);
-    }, [])
+    const [state, dispatch] = useReducer(formReducer, id, createInitialForm ); 
 
     function toggleDropdown(){
         categoryRef.current?.classList.toggle("display-dropdown"); 
     }
-    function handleSelect(e:React.MouseEvent<HTMLUListElement, MouseEvent> 
-        | React.KeyboardEvent<HTMLLIElement>){
+    function handleSelect(e:React.MouseEvent<HTMLUListElement, MouseEvent> | React.KeyboardEvent<HTMLLIElement>){
         const target = e.target as HTMLElement; 
-        setCategory(target.innerText);
+        dispatch({type: ACTION.ADD_CATEGORY, payload: target.innerText});
         toggleDropdown();
+    }
+    function handleDescription(e : React.ChangeEvent<HTMLInputElement>){
+        dispatch({type: ACTION.ADD_DESCRIPTION, payload: e.target.value})
+    }
+    function handleAmount(e : React.ChangeEvent<HTMLInputElement>){
+        dispatch({type: ACTION.ADD_AMOUNT, payload: e.target.value})
     }
     function handleDate(inputDate:string){
         const date = new Date(inputDate);
-        const dateForInput = date.toISOString().split("T")[0]; 
-        const dateForTransaction = date.toLocaleDateString("en-GB", dateOptions);
-        setDate(dateForTransaction);
-        setToday(dateForInput);
+        dispatch({type:ACTION.SET_DATE, payload:date})
     }
     function submitForm(e:React.FormEvent<HTMLFormElement>){
         e.preventDefault();
-        const image = category.toLowerCase().replace(" ", "-");
-        const transaction:Transaction = {
-            id: id,
-            date: date!,
-            description: description,
-            amount: Number(amount!),
-            category: category,
-            image: `assets/${image}.jpg`
-        }
+        const {today, ...transaction} = state;  
+        void today; 
         addTransaction(transaction);
         setModal(false);
     }
@@ -78,7 +55,7 @@ export default function Modal({setModal, addTransaction, categories, id}:Props){
                         onClick={toggleDropdown}
                         onKeyUp={(e)=>{ if(e.key==="Enter") toggleDropdown()}}
                         >
-                            <span>{category}</span>
+                            <span>{state.category}</span>
                             <CaretDown/>
                         </div>
                         <div className="select-dropdown" ref={categoryRef}>
@@ -104,8 +81,8 @@ export default function Modal({setModal, addTransaction, categories, id}:Props){
                         type="text" 
                         placeholder="Ex: going to the movies"
                         required
-                        value={description}
-                        onChange={(e)=>setDescription(e.target.value)}
+                        value={state.description}
+                        onChange={(e)=>handleDescription(e)}
                         />
                     </div>
                                       
@@ -115,8 +92,7 @@ export default function Modal({setModal, addTransaction, categories, id}:Props){
                         type="number" step="0.01" min="0" 
                         placeholder="Enter a number" 
                         required
-                        value={amount}
-                        onChange={(e)=>setAmount(e.target.value)}
+                        onChange={(e)=>handleAmount(e)}
                         />
                     </div>
                     
@@ -124,7 +100,7 @@ export default function Modal({setModal, addTransaction, categories, id}:Props){
                     <div className="input-field">
                         <input id="date" 
                         type="date" 
-                        value={today}
+                        value={state.today}
                         required
                         onChange={(e)=>handleDate(e.target.value)}
                         />
