@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
+import { INITIAL_STATE, transactionReducer, T_ACTION } from '../../hooks/transactionReducer';
 import SearchAndFilter from '../../components/searchAndFilter/SearchAndFilter';
 import TransactionsList from '../../components/transactionsList/TransactionsList';
 import TransactionsTotal from '../../components/transactionsTotal/TransactionsTotal';
@@ -8,88 +9,62 @@ import Transaction from '../../types/Transaction';
 import './transactions.scss';
 
 export default function Transactions(){
-    const [data, setData] = useState<Transaction[] | null>(null);
-    const [transactions, setTransactions]=useState<Transaction[] | null>(null);
-    const [categories, setCategories] = useState <string[] | null>(null);
-    const [category, setCategory] = useState("All Transactions");
-    const [sortWord, setSortWord] = useState('Latest'); 
-    const [searchWord, setSearchWord] = useState(''); 
+    const [state, dispatch] = useReducer(transactionReducer, INITIAL_STATE)
     const [modal, setModal] = useState(false);
-
+    
     useEffect(()=>{
         fetch("/data/transactions.json")
         .then(response => response.json())
         .then((response : Transaction[] | null ) =>{
-            const allCategories = new Set(response?.map((item : Transaction) => item.category)); 
-            const allCategoriesString = [...allCategories]; 
-            setData(response);
-            setTransactions(response);
-            setCategories(allCategoriesString);
+            if(response){
+                const allCategories = new Set(response.map((item : Transaction) => item.category)); 
+                const allCategoriesString = [...allCategories]; 
+                dispatch({
+                    type: "fetchedData", 
+                    payload: {
+                        data: response, 
+                        categories: allCategoriesString
+                    }
+                })
+            }
         })
         .catch(error=> console.log(error))
        }, [])
     
     let total = 0; 
-    if (transactions) total = transactions.reduce(function (total, item){return total + item.amount}, 0);
+    if (state.transactions) total = state.transactions.reduce(function (total, item){
+        return total + item.amount}, 0);
     
     function search(e : React.ChangeEvent<HTMLInputElement>){
-        setSearchWord(e.target.value);
-        searchSortFilter(category, e.target.value, sortWord);
+        dispatch({type:T_ACTION.SEARCH, payload: e.target.value})
     }
     function filter(e:React.MouseEvent<HTMLUListElement, MouseEvent>){
         const target = e.target as HTMLElement;
-        setCategory(target.innerText); 
-        searchSortFilter(target.innerText, searchWord, sortWord);
+        dispatch({type:T_ACTION.FILTER, payload: target.innerText})
     }
     function sort(e:React.MouseEvent<HTMLUListElement, MouseEvent>){
         const target = e.target as HTMLElement;
-        setSortWord(target.innerText); 
-        searchSortFilter(category, searchWord, target.innerText);
-    }
-    function searchSortFilter(cat:string, search:string, sort:string){
-        if(data){
-            let preOrderedData: Transaction[]=[];  
-            if(cat === "All Transactions") preOrderedData = [...data]; 
-                else preOrderedData = data.filter(item => item.category.includes(cat));
-            switch(sort){
-                case "Highest": 
-                    preOrderedData.sort((a, b) => b.amount - a.amount); 
-                    break; 
-                case "Lowest":
-                    preOrderedData.sort((a, b) => a.amount - b.amount);
-                    break;
-                case "Latest":
-                case "Oldest":
-                    preOrderedData.sort((a,b)=>{
-                        const date1 = new Date(a.date); 
-                        const date2 = new Date(b.date);
-                        if(sort === "Latest") {
-                            return date2.getTime() - date1.getTime(); 
-                        } else return date1.getTime() - date2.getTime();
-                    });
-            }
-            const searchTransactions = preOrderedData.filter(item => {
-                return item.description.toLowerCase().includes(search.toLowerCase())
-            })
-            setTransactions(searchTransactions); 
-        }
+        dispatch({type:T_ACTION.SORT, payload: target.innerText})
     }
     function openModal(){
         setModal(true); 
     }
     function addTransaction(t:Transaction){
         let newData :Transaction[] | null= null; 
-        if (data){
-            newData=[...data]; 
+        if (state.data){
+            newData=[...state.data]; 
             newData.unshift(t);
         } else {newData=[t]}
-        setData(newData);
-        setTransactions(newData);
-        setCategory("All Transactions"); 
-        setSortWord("Latest");
-        setSearchWord('');
+        dispatch({
+            type:"addTransaction", 
+            payload: {
+                data: newData, 
+                category: "All Transactions", 
+                sortWord: "Latest", 
+                searchWord: ""
+            }
+        })
     }
-
     return (
         <section className='transactions-page'>
             <div className="transactions-page-header">
@@ -98,21 +73,21 @@ export default function Transactions(){
                 {modal && 
                     <Modal 
                     setModal={setModal} 
-                    categories={categories} 
+                    categories={state.categories} 
                     addTransaction={addTransaction}
-                    id={data? (data.length + 1).toString(): "1"}
+                    id={state.data? (state.data.length + 1).toString(): "1"}
                     />
                 }
             </div>
             <div className="content-container">
                 <SearchAndFilter search={search} filter={filter} sort={sort} 
-                categories={categories} category={category} sortWord={sortWord} searchWord={searchWord}
+                categories={state.categories} category={state.category} sortWord={state.sortWord} searchWord={state.searchWord}
                 />
-                {transactions && transactions.length>0 ? 
-                    <TransactionsList transactions={transactions}/>
+                {state.transactions && state.transactions.length>0 
+                    ? <TransactionsList transactions={state.transactions}/>
                     : <p className='no-data'>No transactions available</p>
                 }
-                <TransactionsTotal category={category} total={total}/>
+                <TransactionsTotal category={state.category} total={total}/>
             </div>
         </section>
     )

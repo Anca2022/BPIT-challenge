@@ -1,7 +1,7 @@
-import { State, FormReducerAction } from "../types/FormReducer";
+import { FormState, FormReducerAction } from "../types/FormReducer";
 import dateOptions from "../data/dateOptions";
 
-export function createInitialForm(id:string):State{
+export function createInitialForm(id:string):FormState{
     const dateToday = new Date(Date.now());
     return {
         id: id, 
@@ -14,7 +14,7 @@ export function createInitialForm(id:string):State{
     };
 }
 
-export function formReducer(state:State, action:FormReducerAction):State{
+export function formReducer(state:FormState, action:FormReducerAction):FormState{
     switch(action.type){
         case "setDate": 
             return{...state, 

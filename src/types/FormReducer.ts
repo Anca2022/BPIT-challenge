@@ -1,6 +1,6 @@
 import Transaction from "./Transaction";
 
-export type State = Transaction & {
+export type FormState = Transaction & {
     today:string
 };
 
