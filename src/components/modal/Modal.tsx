@@ -15,30 +15,18 @@ export default function Modal({setModal, addTransaction, categories, id}:ModalPr
     }
     function handleSelect(e:React.MouseEvent<HTMLUListElement, MouseEvent> | React.KeyboardEvent<HTMLLIElement>){
         const target = e.target as HTMLElement; 
-        dispatch({
-            type: ACTION.ADD_CATEGORY, 
-            payload: {category: target.innerText}
-        });
+        dispatch({type: ACTION.ADD_CATEGORY, payload: target.innerText});
         toggleDropdown();
     }
     function handleDescription(e : React.ChangeEvent<HTMLInputElement>){
-        dispatch({
-            type: ACTION.ADD_DESCRIPTION, 
-            payload: {value: e.target.value}
-        })
+        dispatch({type: ACTION.ADD_DESCRIPTION, payload: e.target.value})
     }
     function handleAmount(e : React.ChangeEvent<HTMLInputElement>){
-        dispatch({
-            type: ACTION.ADD_AMOUNT, 
-            payload: {value: e.target.value}
-        })
+        dispatch({type: ACTION.ADD_AMOUNT, payload: e.target.value})
     }
     function handleDate(inputDate:string){
         const date = new Date(inputDate);
-        dispatch({
-            type:ACTION.SET_DATE, 
-            payload:{date: date}
-        })
+        dispatch({type:ACTION.SET_DATE, payload:date})
     }
     function submitForm(e:React.FormEvent<HTMLFormElement>){
         e.preventDefault();

@@ -18,31 +18,21 @@ export function formReducer(state:FormState, action:FormReducerAction):FormState
     switch(action.type){
         case "setDate": 
             return{...state, 
-                today: action.payload.date
-                    ?.toISOString().split("T")[0] 
-                    ?? state.today, 
-                date: action.payload.date
-                    ?.toLocaleDateString("en-GB", dateOptions) 
-                    ?? state.date
+                today: action.payload.toISOString().split("T")[0], 
+                date: action.payload.toLocaleDateString("en-GB", dateOptions) 
             }; 
         case "addCategory": 
             return{...state, 
-                category: action.payload.category
-                    ? action.payload.category 
-                    : "Groceries", 
-                image: `assets/${action.payload.category?.toLowerCase().replace(" ", "-")}.jpg`
+                category: action.payload,                   
+                image: `assets/${action.payload.toLowerCase().replace(" ", "-")}.jpg`
             }; 
         case "addDescription": 
             return {...state, 
-                description: action.payload.value
-                    ? action.payload.value 
-                    : ""
+                description: action.payload, 
             }; 
         case "addAmount": 
             return {...state, 
-                amount: action.payload.value 
-                    ? Number(action.payload.value)
-                    : 0
+                amount: Number(action.payload) 
             }; 
         default: 
             throw new Error('Invalid action for formReducer');
@@ -54,4 +44,4 @@ export const ACTION = {
     ADD_CATEGORY: 'addCategory', 
     ADD_DESCRIPTION: 'addDescription', 
     ADD_AMOUNT: 'addAmount'
-}
+} as const; 
