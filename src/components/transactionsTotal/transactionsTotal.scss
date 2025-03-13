@@ -1,33 +1,33 @@
 @use "../../scss/main.scss" as *;
 
-.transactions-total{
-    background-color: $beige-100;
-    border-radius: 0.5rem;
-    padding:1.5rem 1rem;
-    display:flex;
-    gap: 1.5rem;
-    flex-direction:column;
-    .total-text{
-        @include text-preset-2;    
-        .transaction-category{
-            color:$grey-500;
-            @include text-preset-4;
-        }
+.transactions-total {
+  background-color: $beige-100;
+  border-radius: 0.5rem;
+  padding: 1.5rem 1rem;
+  display: flex;
+  gap: 1.5rem;
+  flex-direction: column;
+  .total-text {
+    @include text-preset-2;
+    .transaction-category {
+      color: $grey-500;
+      @include text-preset-4;
     }
-    .total-sum{
-        text-align:right;
-        @include text-preset-1;
-    }
+  }
+  .total-sum {
+    text-align: right;
+    @include text-preset-1;
+  }
 }
 
-@media(min-width:$tablet-size){
-    .transactions-total{
-        flex-direction: row;
-        justify-content: end;
-        align-items: center;
-        gap:2rem;
-        .total-text{
-            text-align: center;
-        }
+@media (min-width: $tablet-size) {
+  .transactions-total {
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    gap: 2rem;
+    .total-text {
+      text-align: center;
     }
+  }
 }

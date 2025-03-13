@@ -1,9 +1,11 @@
-*, *::before, *::after{
+*,
+*::before,
+*::after {
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
 }
 
-html{
+html {
   font-size: 16px;
 }

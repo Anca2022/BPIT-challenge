@@ -1,9 +1,9 @@
-import OtherPage from "./OtherPage"; 
+import OtherPage from "./OtherPage";
 
-export default function Pots(){
-    return (
-        <section>
-            <OtherPage>Pots</OtherPage>
-        </section>
-    ); 
+export default function Pots() {
+  return (
+    <section>
+      <OtherPage>Pots</OtherPage>
+    </section>
+  );
 }
