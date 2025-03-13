@@ -1,12 +1,10 @@
 import "./transactionsTotal.scss";
+import { TransactionsTotalProps } from "../../types/Props";
 
 export default function TransactionsTotal({
   category,
   total,
-}: {
-  category: string;
-  total: number;
-}) {
+}: TransactionsTotalProps) {
   return (
     <div className="transactions-total">
       <div className="total-text">

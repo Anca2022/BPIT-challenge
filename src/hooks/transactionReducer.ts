@@ -1,4 +1,4 @@
-import Transaction from "../types/Transaction";
+import searchSortFilter from "../utils/searchSortFilter";
 import {
   TransactionPageState,
   TransactionAction,
@@ -37,68 +37,37 @@ export function transactionReducer(
       return {
         ...state,
         searchWord: action.payload,
-        transactions: searchSortFilter(
-          state.category,
-          action.payload,
-          state.sortWord
-        ),
+        transactions: searchSortFilter({
+          data: state.data,
+          category: state.category,
+          search: action.payload,
+          sort: state.sortWord,
+        }),
       };
     case "filter":
       return {
         ...state,
         category: action.payload,
-        transactions: searchSortFilter(
-          action.payload,
-          state.searchWord,
-          state.sortWord
-        ),
+        transactions: searchSortFilter({
+          data: state.data,
+          category: action.payload,
+          search: state.searchWord,
+          sort: state.sortWord,
+        }),
       };
     case "sort":
       return {
         ...state,
         sortWord: action.payload,
-        transactions: searchSortFilter(
-          state.category,
-          state.searchWord,
-          action.payload
-        ),
+        transactions: searchSortFilter({
+          data: state.data,
+          category: state.category,
+          search: state.searchWord,
+          sort: action.payload,
+        }),
       };
     default:
       throw new Error("Invalid action type for transactionReducer");
-  }
-
-  function searchSortFilter(
-    category: string,
-    search: string,
-    sort: string
-  ): Transaction[] {
-    let dataToBeOrdered: Transaction[] = [];
-    if (category === "All Transactions") dataToBeOrdered = [...state.data];
-    else
-      dataToBeOrdered = state.data.filter((item) =>
-        item.category.includes(category)
-      );
-    switch (sort) {
-      case "Highest":
-        dataToBeOrdered.sort((a, b) => b.amount - a.amount);
-        break;
-      case "Lowest":
-        dataToBeOrdered.sort((a, b) => a.amount - b.amount);
-        break;
-      case "Latest":
-      case "Oldest":
-        dataToBeOrdered.sort((a, b) => {
-          const date1 = new Date(a.date);
-          const date2 = new Date(b.date);
-          if (sort === "Latest") {
-            return date2.getTime() - date1.getTime();
-          } else return date1.getTime() - date2.getTime();
-        });
-    }
-    const filteredData = dataToBeOrdered.filter((item) => {
-      return item.description.toLowerCase().includes(search.toLowerCase());
-    });
-    return filteredData;
   }
 }
 

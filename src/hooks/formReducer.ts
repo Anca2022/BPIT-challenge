@@ -1,16 +1,21 @@
 import { FormState, FormReducerAction } from "../types/FormReducer";
-import dateOptions from "../data/dateOptions";
+import {
+  formatDateForInput,
+  formatDateForTransaction,
+} from "../utils/formatDate";
+import { createImagePath } from "../utils/imageUtils";
 
 export function createInitialForm(id: string): FormState {
   const dateToday = new Date(Date.now());
+  const category = "Groceries";
   return {
     id: id,
-    category: "Groceries",
+    category: category,
     description: "",
     amount: 0,
-    date: dateToday.toLocaleDateString("en-GB", dateOptions), //date in string format for transaction obj
-    today: dateToday.toISOString().split("T")[0], //date in string format for input field
-    image: "assets/groceries.jpg",
+    date: formatDateForTransaction(dateToday),
+    today: formatDateForInput(dateToday),
+    image: createImagePath(category),
   };
 }
 
@@ -22,14 +27,14 @@ export function formReducer(
     case "setDate":
       return {
         ...state,
-        today: action.payload.toISOString().split("T")[0],
-        date: action.payload.toLocaleDateString("en-GB", dateOptions),
+        today: formatDateForInput(action.payload),
+        date: formatDateForTransaction(action.payload),
       };
     case "addCategory":
       return {
         ...state,
         category: action.payload,
-        image: `assets/${action.payload.toLowerCase().replace(" ", "-")}.jpg`,
+        image: createImagePath(action.payload),
       };
     case "addDescription":
       return { ...state, description: action.payload };

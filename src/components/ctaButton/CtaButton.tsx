@@ -1,12 +1,10 @@
 import "./ctaButton.scss";
+import { CtaButtonProps } from "../../types/Props";
 
-interface BtnProps {
-  handleClick?: () => void;
-}
 export default function CtaBtn({
   handleClick,
   children,
-}: React.PropsWithChildren<BtnProps>) {
+}: React.PropsWithChildren<CtaButtonProps>) {
   return (
     <button className="cta-btn" onClick={handleClick}>
       {children}
