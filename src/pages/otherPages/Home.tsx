@@ -1,9 +1,9 @@
 import OtherPage from "./OtherPage";
 
-export default function Home(){
-    return (
+export default function Home() {
+  return (
     <section>
-        <OtherPage>Home</OtherPage>
+      <OtherPage>Home</OtherPage>
     </section>
-    ); 
+  );
 }

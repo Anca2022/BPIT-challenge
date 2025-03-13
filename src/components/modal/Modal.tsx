@@ -1,6 +1,6 @@
 import { useRef, useReducer } from "react";
 import { formReducer, createInitialForm, ACTION } from "../../hooks/formReducer";
-import CtaBtn from "../ctaBtn/CtaBtn";
+import CtaBtn from "../ctaButton/CtaButton";
 import CaretDown from "../../assets/icon-caret-down.svg?react";
 import ModalProps from "../../types/ModalProps";
 import "./modal.scss"; 
