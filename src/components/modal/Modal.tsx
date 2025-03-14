@@ -4,13 +4,13 @@ import {
   createInitialForm,
   ACTION,
 } from "../../hooks/formReducer";
-import useDropdown from "../../hooks/useDropdown";
+import ModalHeader from "../modalHeader/ModalHeader";
+import ModalDropdown from "../modalDropdown/ModalDropdown";
+import ModalInputField from "../modalInputField/ModalInputField";
 import CtaBtn from "../ctaButton/CtaButton";
-import CaretDown from "../../assets/icon-caret-down.svg?react";
 import ModalProps from "../../types/ModalProps";
 import "./modal.scss";
 import "../inputField.scss";
-import ModalHeader from "../modalHeader/ModalHeader";
 
 export default function Modal({
   closeModal,
@@ -19,7 +19,6 @@ export default function Modal({
   id,
 }: ModalProps) {
   const [state, dispatch] = useReducer(formReducer, id, createInitialForm);
-  const { dropdownRef, toggleDropdown } = useDropdown();
 
   function handleSelect(
     e:
@@ -28,7 +27,6 @@ export default function Modal({
   ) {
     const target = e.target as HTMLElement;
     dispatch({ type: ACTION.ADD_CATEGORY, payload: target.innerText });
-    toggleDropdown();
   }
   function handleDescription(e: React.ChangeEvent<HTMLInputElement>) {
     dispatch({ type: ACTION.ADD_DESCRIPTION, payload: e.target.value });
@@ -55,75 +53,30 @@ export default function Modal({
           Choose a category and set the amount for your transaction.
         </p>
         <form onSubmit={submitForm}>
-          <label>Transaction Category</label>
-          <div className="sort">
-            <div
-              className="input-field"
-              tabIndex={0}
-              onClick={toggleDropdown}
-              onKeyUp={(e) => {
-                if (e.key === "Enter") toggleDropdown();
-              }}
-            >
-              <span>{state.category}</span>
-              <CaretDown />
-            </div>
-            <div className="select-dropdown" ref={dropdownRef}>
-              <ul onClick={(e) => handleSelect(e)}>
-                {categories &&
-                  categories.map((item) => {
-                    return (
-                      <li
-                        tabIndex={0}
-                        key={item}
-                        onKeyUp={(e) => {
-                          if (e.key === "Enter") handleSelect(e);
-                        }}
-                      >
-                        {item}
-                      </li>
-                    );
-                  })}
-              </ul>
-            </div>
-          </div>
-
-          <label htmlFor="description">Description</label>
-          <div className="input-field">
-            <input
-              id="description"
-              type="text"
-              placeholder="Ex: going to the movies"
-              required
-              value={state.description}
-              onChange={(e) => handleDescription(e)}
-            />
-          </div>
-
-          <label htmlFor="amount">Amount Spend</label>
-          <div className="input-field">
-            <input
-              id="amount"
-              type="number"
-              step="0.01"
-              min="0"
-              placeholder="Enter a number"
-              required
-              onChange={(e) => handleAmount(e)}
-            />
-          </div>
-
-          <label htmlFor="date">Date</label>
-          <div className="input-field">
-            <input
-              id="date"
-              type="date"
-              value={state.today}
-              required
-              onChange={(e) => handleDate(e.target.value)}
-            />
-          </div>
-
+          <ModalDropdown
+            addSelection={handleSelect}
+            categories={categories}
+            category={state.category}
+          />
+          <ModalInputField
+            labelDescription="description"
+            type="text"
+            placeholder="Ex: going to the movies"
+            value={state.description}
+            onChange={(e) => handleDescription(e)}
+          />
+          <ModalInputField
+            labelDescription="amount"
+            type="number"
+            placeholder="Enter a number"
+            onChange={(e) => handleAmount(e)}
+          />
+          <ModalInputField
+            labelDescription="date"
+            type="date"
+            value={state.today}
+            onChange={(e) => handleDate(e.target.value)}
+          />
           <CtaBtn>Add Transaction</CtaBtn>
         </form>
       </div>

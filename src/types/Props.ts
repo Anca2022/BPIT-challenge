@@ -26,3 +26,11 @@ export interface TransactionsSubcomponentProps {
 export interface ModalHeaderProps {
   onClick: () => void;
 }
+
+export interface InputFieldProps {
+  labelDescription: string;
+  type: string;
+  placeholder?: string;
+  value?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
