@@ -9,7 +9,7 @@ import TransactionsList from "../../components/transactionsList/TransactionsList
 import TransactionsTotal from "../../components/transactionsTotal/TransactionsTotal";
 import Modal from "../../components/modal/Modal";
 import CtaBtn from "../../components/ctaButton/CtaButton";
-import Transaction from "../../types/Transaction";
+import { Transaction, ApiTransaction } from "../../types/Transaction";
 import "./transactions.scss";
 
 export default function Transactions() {
@@ -17,17 +17,27 @@ export default function Transactions() {
   const [modal, setModal] = useState(false);
 
   useEffect(() => {
-    fetch("/data/transactions.json")
+    fetch("https://6784cce91ec630ca33a5b87f.mockapi.io/api/v1/data")
       .then((response) => response.json())
-      .then((response: Transaction[] | null) => {
+      .then((response: ApiTransaction[] | null) => {
         if (response) {
           const allCategories = new Set(
-            response.map((item: Transaction) => item.category)
+            response.map((item: ApiTransaction) => item.category)
           );
+          const data = response.map((item): Transaction => {
+            return {
+              id: item.id,
+              date: item.date,
+              description: item.description,
+              amount: Number(item.amount),
+              category: item.category,
+              image: item.spentLocationImage,
+            };
+          });
           dispatch({
             type: T_ACTION.FETCHED_DATA,
             payload: {
-              data: response,
+              data: data,
               categories: [...allCategories],
             },
           });
