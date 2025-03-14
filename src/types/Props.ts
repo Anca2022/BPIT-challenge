@@ -22,3 +22,7 @@ export interface TransactionsSubcomponentProps {
   state: TransactionPageState;
   dispatch: React.Dispatch<TransactionAction>;
 }
+
+export interface ModalHeaderProps {
+  onClick: () => void;
+}
