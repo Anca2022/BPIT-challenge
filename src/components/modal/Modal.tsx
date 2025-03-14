@@ -6,7 +6,7 @@ import ModalProps from "../../types/ModalProps";
 import "./modal.scss"; 
 import "../inputField.scss";
 
-export default function Modal({setModal, addTransaction, categories, id}:ModalProps){
+export default function Modal({closeModal, addTransaction, categories, id}:ModalProps){
     const categoryRef = useRef<HTMLDivElement | null>(null)
     const [state, dispatch] = useReducer(formReducer, id, createInitialForm ); 
 
@@ -33,7 +33,7 @@ export default function Modal({setModal, addTransaction, categories, id}:ModalPr
         const {today, ...transaction} = state;  
         void today; 
         addTransaction(transaction);
-        setModal(false);
+        closeModal();
     }
     return(
         <div className="container">
@@ -41,7 +41,7 @@ export default function Modal({setModal, addTransaction, categories, id}:ModalPr
                 <div className="modal-header">
                     <h2>Add New Transaction</h2>
                     <button className="close-modal-btn" 
-                    onClick={()=>setModal(false)}
+                    onClick={()=>closeModal()}
                     >
                         ✖
                     </button>
