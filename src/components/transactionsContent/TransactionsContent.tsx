@@ -1,4 +1,4 @@
-import SearchAndFilter from "../searchAndFilter/SearchAndFilter";
+import SearchSortFilter from "../searchSortFilter/SearchSortFilter";
 import TransactionsList from "../transactionsList/TransactionsList";
 import TransactionsTotal from "../transactionsTotal/TransactionsTotal";
 import { TransactionsSubcomponentProps } from "../../types/Props";
@@ -24,7 +24,7 @@ export default function TransactionsContent({
   }
   return (
     <div className="content-container">
-      <SearchAndFilter
+      <SearchSortFilter
         search={search}
         filter={filter}
         sort={sort}
@@ -33,7 +33,7 @@ export default function TransactionsContent({
         sortWord={state.sortWord}
         searchWord={state.searchWord}
       />
-      {state.transactions && state.transactions.length > 0 ? (
+      {state.transactions.length > 0 ? (
         <TransactionsList transactions={state.transactions} />
       ) : (
         <p className="no-data">No transactions available</p>

@@ -50,3 +50,35 @@ export interface ModalDropdownProps {
   categories: string[] | null;
   category: string;
 }
+
+export interface SearchSortFilterProps {
+  categories: string[] | null;
+  category: string;
+  sortWord: string;
+  searchWord: string;
+  search: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  filter: (e: React.MouseEvent<HTMLUListElement, MouseEvent>) => void;
+  sort: (e: React.MouseEvent<HTMLUListElement, MouseEvent>) => void;
+}
+
+export interface SearchProps {
+  searchWord: string;
+  search: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export interface DropdownProps {
+  handleSortOrFilter: (
+    e: React.MouseEvent<HTMLUListElement, MouseEvent>
+  ) => void;
+  name: string;
+  word: string;
+  categories: string[] | null;
+  icon: React.FunctionComponent<
+    React.SVGProps<SVGSVGElement> & {
+      title?: string;
+      titleId?: string;
+      desc?: string;
+      descId?: string;
+    }
+  >;
+}

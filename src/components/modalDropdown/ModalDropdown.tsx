@@ -19,7 +19,7 @@ export default function ModalDropdown({
   return (
     <>
       <label>Transaction Category</label>
-      <div className="sort">
+      <div className="dropdown">
         <div
           className="input-field"
           tabIndex={0}
@@ -31,22 +31,24 @@ export default function ModalDropdown({
           <span>{category}</span>
           <CaretDown />
         </div>
-        <div className="select-dropdown" ref={dropdownRef}>
+        <div
+          className="select-dropdown modal-select-dropdown"
+          ref={dropdownRef}
+        >
           <ul onClick={handleSelection}>
-            {categories &&
-              categories.map((item) => {
-                return (
-                  <li
-                    tabIndex={0}
-                    key={item}
-                    onKeyUp={(e) => {
-                      if (e.key === "Enter") handleSelection(e);
-                    }}
-                  >
-                    {item}
-                  </li>
-                );
-              })}
+            {categories?.map((item) => {
+              return (
+                <li
+                  tabIndex={0}
+                  key={item}
+                  onKeyUp={(e) => {
+                    if (e.key === "Enter") handleSelection(e);
+                  }}
+                >
+                  {item}
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>

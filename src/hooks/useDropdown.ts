@@ -5,5 +5,8 @@ export default function useDropdown() {
   function toggleDropdown() {
     dropdownRef.current?.classList.toggle("display-dropdown");
   }
-  return { dropdownRef, toggleDropdown };
+  function closeDropdown() {
+    dropdownRef.current?.classList.remove("display-dropdown");
+  }
+  return { dropdownRef, toggleDropdown, closeDropdown };
 }

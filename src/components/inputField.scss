@@ -38,8 +38,7 @@ input {
     font-size: 0.9rem;
   }
 }
-.sort,
-.filter {
+.dropdown {
   position: relative;
   cursor: pointer;
   .select-dropdown {
@@ -70,14 +69,17 @@ input {
       }
     }
   }
+  .modal-select-dropdown {
+    width: 100%;
+  }
   .display-dropdown {
     display: block;
+    z-index: 10;
   }
 }
 
 @media (min-width: $tablet-size) {
-  .sort,
-  .filter {
+  .dropdown {
     .select-dropdown {
       top: 3.25rem;
     }
