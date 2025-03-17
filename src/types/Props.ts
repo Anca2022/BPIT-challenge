@@ -23,6 +23,12 @@ export interface TransactionsSubcomponentProps {
   dispatch: React.Dispatch<TransactionAction>;
 }
 
+export interface ModalProps {
+  closeModal: () => void;
+  addTransaction: (t: Transaction) => void;
+  categories: string[] | null;
+  id: string;
+}
 export interface ModalHeaderProps {
   onClick: () => void;
 }
@@ -33,4 +39,14 @@ export interface InputFieldProps {
   placeholder?: string;
   value?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export interface ModalDropdownProps {
+  addSelection: (
+    e:
+      | React.MouseEvent<HTMLUListElement, MouseEvent>
+      | React.KeyboardEvent<HTMLLIElement>
+  ) => void;
+  categories: string[] | null;
+  category: string;
 }

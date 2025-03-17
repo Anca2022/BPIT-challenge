@@ -8,7 +8,7 @@ import ModalHeader from "../modalHeader/ModalHeader";
 import ModalDropdown from "../modalDropdown/ModalDropdown";
 import ModalInputField from "../modalInputField/ModalInputField";
 import CtaBtn from "../ctaButton/CtaButton";
-import ModalProps from "../../types/ModalProps";
+import { ModalProps } from "../../types/Props";
 import "./modal.scss";
 import "../inputField.scss";
 
@@ -34,8 +34,8 @@ export default function Modal({
   function handleAmount(e: React.ChangeEvent<HTMLInputElement>) {
     dispatch({ type: ACTION.ADD_AMOUNT, payload: e.target.value });
   }
-  function handleDate(inputDate: string) {
-    const date = new Date(inputDate);
+  function handleDate(e: React.ChangeEvent<HTMLInputElement>) {
+    const date = new Date(e.target.value);
     dispatch({ type: ACTION.SET_DATE, payload: date });
   }
   function submitForm(e: React.FormEvent<HTMLFormElement>) {
@@ -48,7 +48,7 @@ export default function Modal({
   return (
     <div className="container">
       <div className="modal-container">
-        <ModalHeader onClick={() => closeModal()} />
+        <ModalHeader onClick={closeModal} />
         <p className="modal-text">
           Choose a category and set the amount for your transaction.
         </p>
@@ -63,19 +63,19 @@ export default function Modal({
             type="text"
             placeholder="Ex: going to the movies"
             value={state.description}
-            onChange={(e) => handleDescription(e)}
+            onChange={handleDescription}
           />
           <ModalInputField
             labelDescription="amount"
             type="number"
             placeholder="Enter a number"
-            onChange={(e) => handleAmount(e)}
+            onChange={handleAmount}
           />
           <ModalInputField
             labelDescription="date"
             type="date"
             value={state.today}
-            onChange={(e) => handleDate(e.target.value)}
+            onChange={handleDate}
           />
           <CtaBtn>Add Transaction</CtaBtn>
         </form>

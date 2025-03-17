@@ -39,7 +39,7 @@ export default function SearchAndFilter({
           type="text"
           placeholder="Search transaction"
           value={searchWord}
-          onChange={(e) => search(e)}
+          onChange={search}
         />
         <SearchIcon />
       </div>
@@ -62,7 +62,7 @@ export default function SearchAndFilter({
             </div>
           </div>
           <div className="select-dropdown" ref={sortDropdownRef}>
-            <ul onClick={(e) => sort(e)}>
+            <ul onClick={sort}>
               <li>Latest</li>
               <li>Oldest</li>
               <li>Highest</li>
@@ -87,7 +87,7 @@ export default function SearchAndFilter({
             </div>
           </div>
           <div className="select-dropdown" ref={filterDropdownRef}>
-            <ul onClick={(e) => filter(e)}>
+            <ul onClick={filter}>
               <li>All Transactions</li>
               {categories &&
                 categories.map((item) => {

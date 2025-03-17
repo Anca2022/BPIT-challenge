@@ -1,15 +1,7 @@
 import useDropdown from "../../hooks/useDropdown";
+import { ModalDropdownProps } from "../../types/Props";
 import CaretDown from "../../assets/icon-caret-down.svg?react";
 
-interface ModalDropdownProps {
-  addSelection: (
-    e:
-      | React.MouseEvent<HTMLUListElement, MouseEvent>
-      | React.KeyboardEvent<HTMLLIElement>
-  ) => void;
-  categories: string[] | null;
-  category: string;
-}
 export default function ModalDropdown({
   addSelection,
   categories,

@@ -19,7 +19,7 @@ export default function ModalInputField({
           min="0"
           placeholder={placeholder}
           value={value}
-          onChange={(e) => onChange(e)}
+          onChange={onChange}
           required
         />
       </div>
