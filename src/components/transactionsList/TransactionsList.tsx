@@ -16,14 +16,12 @@ export default function TransactionsList({
         <p className="col4">Amount</p>
       </div>
       <ul className="transactions-list">
-        {transactions.map((transaction: Transaction): JSX.Element => {
-          return (
-            <TransactionsListItem
-              key={transaction.id}
-              transaction={transaction}
-            />
-          );
-        })}
+        {transactions.map((transaction: Transaction) => (
+          <TransactionsListItem
+            key={transaction.id}
+            transaction={transaction}
+          />
+        ))}
       </ul>
     </div>
   );

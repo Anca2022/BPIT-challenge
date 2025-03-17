@@ -8,12 +8,11 @@
   .search {
     width: 13rem;
   }
-  .sort-filter {
+  .sort-filter-container {
     display: flex;
     flex-direction: row;
     gap: 1.5rem;
-    .sort-desktop,
-    .filter-desktop {
+    .dropdown-desktop {
       display: none;
     }
   }
@@ -26,13 +25,11 @@
       width: 9rem;
       max-width: 20rem;
     }
-    .sort-filter {
-      .sort-mobile,
-      .filter-mobile {
+    .sort-filter-container {
+      .dropdown-mobile {
         display: none;
       }
-      .sort-desktop,
-      .filter-desktop {
+      .dropdown-desktop {
         display: flex;
         flex-direction: row;
         align-items: center;
